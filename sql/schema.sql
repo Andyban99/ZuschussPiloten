@@ -55,5 +55,6 @@ CREATE TABLE IF NOT EXISTS rate_limits (
 
 -- Standard Admin-User erstellen (Passwort ändern!)
 -- Passwort: 'admin123' (BITTE ÄNDERN!)
-INSERT INTO admin_users (username, password_hash) VALUES 
+-- INSERT IGNORE verhindert Fehler bei erneutem Ausführen
+INSERT IGNORE INTO admin_users (username, password_hash) VALUES 
 ('admin', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi');
