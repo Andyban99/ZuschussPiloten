@@ -101,7 +101,9 @@
 /* ========================================
    Reset & Base Styles
    ======================================== */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -121,17 +123,33 @@ body {
   overflow-x: hidden;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-heading);
   font-weight: 700;
   line-height: 1.2;
   color: var(--gray-900);
 }
 
-h1 { font-size: var(--text-5xl); }
-h2 { font-size: var(--text-4xl); }
-h3 { font-size: var(--text-2xl); }
-h4 { font-size: var(--text-xl); }
+h1 {
+  font-size: var(--text-5xl);
+}
+
+h2 {
+  font-size: var(--text-4xl);
+}
+
+h3 {
+  font-size: var(--text-2xl);
+}
+
+h4 {
+  font-size: var(--text-xl);
+}
 
 p {
   margin-bottom: var(--space-4);
@@ -361,15 +379,105 @@ img {
 }
 
 /* ========================================
-   Hero Section
+   Scroll Video Container
+   Height is set dynamically by JavaScript
+   ======================================== */
+.video-scroll-container {
+  position: relative;
+  /* Height will be set by JS: 100vh + scroll space for video */
+}
+
+/* ========================================
+   Hero Section with Fullscreen Video
    ======================================== */
 .hero {
-  min-height: 100vh;
+  position: relative;
+  height: 100vh;
   display: flex;
   align-items: center;
-  position: relative;
-  background: linear-gradient(135deg, var(--primary-900) 0%, var(--primary-700) 50%, var(--primary-600) 100%);
+  background: #0a0a0a;
   overflow: hidden;
+}
+
+/* Fullscreen Video Wrapper */
+.hero-video-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.hero-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  user-select: none;
+  -webkit-user-drag: none;
+  pointer-events: none;
+}
+
+/* Dark overlay for text readability */
+.hero-video-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom,
+      rgba(0, 0, 0, 0.3) 0%,
+      rgba(0, 0, 0, 0.4) 50%,
+      rgba(0, 0, 0, 0.6) 100%);
+  pointer-events: none;
+}
+
+/* Scroll Indicator */
+.scroll-indicator {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  color: white;
+  opacity: 1;
+  transition: opacity 0.5s ease;
+  z-index: 10;
+}
+
+.scroll-indicator span {
+  font-size: 14px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.scroll-arrow {
+  font-size: 28px;
+  margin-top: 8px;
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+
+  40% {
+    transform: translateY(10px);
+  }
+
+  60% {
+    transform: translateY(5px);
+  }
+}
+
+.video-complete .scroll-indicator {
+  opacity: 0;
 }
 
 .hero::before {
@@ -425,15 +533,20 @@ img {
 }
 
 @keyframes float {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translate(0, 0) scale(1);
   }
+
   25% {
     transform: translate(20px, -20px) scale(1.05);
   }
+
   50% {
     transform: translate(-10px, 10px) scale(0.95);
   }
+
   75% {
     transform: translate(-20px, -10px) scale(1.02);
   }
@@ -469,8 +582,15 @@ img {
 }
 
 @keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
 }
 
 .hero h1 {
@@ -717,7 +837,7 @@ img {
   margin-bottom: var(--space-6);
 }
 
-.form-info > p {
+.form-info>p {
   font-size: var(--text-lg);
   color: rgba(255, 255, 255, 0.8);
   margin-bottom: var(--space-8);
@@ -762,7 +882,7 @@ img {
   margin-bottom: var(--space-2);
 }
 
-.form-card > p {
+.form-card>p {
   text-align: center;
   margin-bottom: var(--space-8);
 }
@@ -871,9 +991,17 @@ img {
 }
 
 @keyframes scaleIn {
-  0% { transform: scale(0); }
-  50% { transform: scale(1.1); }
-  100% { transform: scale(1); }
+  0% {
+    transform: scale(0);
+  }
+
+  50% {
+    transform: scale(1.1);
+  }
+
+  100% {
+    transform: scale(1);
+  }
 }
 
 .form-success h3 {
@@ -1149,8 +1277,13 @@ img {
     padding: var(--space-12) 0;
   }
 
-  h1 { font-size: var(--text-3xl); }
-  h2 { font-size: var(--text-2xl); }
+  h1 {
+    font-size: var(--text-3xl);
+  }
+
+  h2 {
+    font-size: var(--text-2xl);
+  }
 
   .hero-buttons {
     flex-direction: column;
@@ -1184,10 +1317,21 @@ img {
   transform: translateY(0);
 }
 
-.delay-1 { transition-delay: 0.1s; }
-.delay-2 { transition-delay: 0.2s; }
-.delay-3 { transition-delay: 0.3s; }
-.delay-4 { transition-delay: 0.4s; }
+.delay-1 {
+  transition-delay: 0.1s;
+}
+
+.delay-2 {
+  transition-delay: 0.2s;
+}
+
+.delay-3 {
+  transition-delay: 0.3s;
+}
+
+.delay-4 {
+  transition-delay: 0.4s;
+}
 
 /* Overlay for mobile menu */
 .nav-overlay {
